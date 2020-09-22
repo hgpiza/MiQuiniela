@@ -1,0 +1,38 @@
+﻿@model List<MiQuiniela.Models.UsuarioGrupo>
+
+@section scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("a").bind("click", function () {
+                if (this.href) {
+                    // Ensure that loading a new page doesn't open
+                    // a new window
+                    location.href = this.href;
+                    return false;
+                }
+            });
+        });
+    </script>
+}
+
+@section Header {
+    @Html.ActionLink("Inicio", "Rondas", "Quiniela", new { ID_Grupo = Model[0].ID_Grupo, ID_Usuario = Model[0].ID_Usuario, token = Session["AccessToken"].ToString() }, new { data_icon = "home", data_rel="back" })
+    <h1>@ViewBag.Title</h1>
+}
+
+@{
+    ViewBag.Title = "Quinielas";
+}
+<h2>Elige un usuario</h2>
+
+<ol data-role="listview" data-inset="true">
+    <li data-role="list-divider">Usuarios</li>
+    @foreach (var r in Model)
+    { 
+        <li>@Html.ActionLink(r.Usuario.Nickname, "DetallesUsuario", "Quiniela", new { ID_Grupo = r.ID_Grupo, ID_Usuario = r.ID_Usuario }, null) </li>
+    }
+    @if (Model.Count() == 0)
+    { 
+        <li>No hay usuarios</li>
+    }
+</ol>

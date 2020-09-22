@@ -1,0 +1,25 @@
+﻿@model List<MiQuiniela.Models.Grupos>
+
+@section Header {
+    <h1>Mi Quiniela</h1>
+    @Html.ActionLink("Nuevo Grupo", "Create", "Grupos", null, new { data_icon = "plus", Class = "ui-btn-right" })
+}
+
+@{
+    ViewBag.Title = "Mi Quiniela del Mundial";
+}
+
+<h2>@ViewBag.Message</h2>
+
+
+<ul data-role="listview" data-inset="true">
+    <li data-role="list-divider">Grupos</li>
+    @foreach (MiQuiniela.Models.Grupos g in Model)
+    { 
+        <li>@Html.ActionLink(g.Nombre, "Rondas", "Quiniela", new { ID_Grupo = g.ID_Grupo, ID_Usuario = g.ID_Usuario }, null)</li>
+    }
+    @if (Model.Count() == 0)
+    { 
+        <li>No tienes grupos asignados</li>
+    }
+</ul>

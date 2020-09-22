@@ -1,0 +1,475 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="QuinielaModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityContainer Name="QuinielaModelStoreContainer">
+          <EntitySet Name="Grupos" EntityType="QuinielaModel.Store.Grupos" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Partidos" EntityType="QuinielaModel.Store.Partidos" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Quinielas" EntityType="QuinielaModel.Store.Quinielas" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="UsuarioGrupo" EntityType="QuinielaModel.Store.UsuarioGrupo" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Usuarios" EntityType="QuinielaModel.Store.Usuarios" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="RankingView" EntityType="QuinielaModel.Store.RankingView" store:Type="Views" store:Schema="dbo" store:Name="RankingView">
+            <DefiningQuery>SELECT 
+      [RankingView].[ID_Usuario] AS [ID_Usuario], 
+      [RankingView].[ID_Grupo] AS [ID_Grupo], 
+      [RankingView].[Nickname] AS [Nickname], 
+      [RankingView].[TotalPuntos] AS [TotalPuntos], 
+      [RankingView].[Diferencia] AS [Diferencia]
+      FROM [dbo].[RankingView] AS [RankingView]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK__Grupos__ID_Usuar__0519C6AF" Association="QuinielaModel.Store.FK__Grupos__ID_Usuar__0519C6AF">
+            <End Role="Usuarios" EntitySet="Usuarios" />
+            <End Role="Grupos" EntitySet="Grupos" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Quinielas__ID_Gr__182C9B23" Association="QuinielaModel.Store.FK__Quinielas__ID_Gr__182C9B23">
+            <End Role="Grupos" EntitySet="Grupos" />
+            <End Role="Quinielas" EntitySet="Quinielas" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Quinielas__ID_Pa__145C0A3F" Association="QuinielaModel.Store.FK__Quinielas__ID_Pa__145C0A3F">
+            <End Role="Partidos" EntitySet="Partidos" />
+            <End Role="Quinielas" EntitySet="Quinielas" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Quinielas__ID_Us__1367E606" Association="QuinielaModel.Store.FK__Quinielas__ID_Us__1367E606">
+            <End Role="Usuarios" EntitySet="Usuarios" />
+            <End Role="Quinielas" EntitySet="Quinielas" />
+          </AssociationSet>
+          <AssociationSet Name="FK__UsuarioGr__ID_Gr__0AD2A005" Association="QuinielaModel.Store.FK__UsuarioGr__ID_Gr__0AD2A005">
+            <End Role="Grupos" EntitySet="Grupos" />
+            <End Role="UsuarioGrupo" EntitySet="UsuarioGrupo" />
+          </AssociationSet>
+          <AssociationSet Name="FK__UsuarioGr__ID_Us__09DE7BCC" Association="QuinielaModel.Store.FK__UsuarioGr__ID_Us__09DE7BCC">
+            <End Role="Usuarios" EntitySet="Usuarios" />
+            <End Role="UsuarioGrupo" EntitySet="UsuarioGrupo" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Grupos">
+          <Key>
+            <PropertyRef Name="ID_Grupo" />
+          </Key>
+          <Property Name="ID_Grupo" Type="int" Nullable="false" />
+          <Property Name="ID_Usuario" Type="int" />
+          <Property Name="Nombre" Type="varchar" MaxLength="70" />
+          <Property Name="FechaIns" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Partidos">
+          <Key>
+            <PropertyRef Name="ID_Partido" />
+          </Key>
+          <Property Name="ID_Partido" Type="int" Nullable="false" />
+          <Property Name="Fecha" Type="datetime" />
+          <Property Name="Equipo1" Type="varchar" MaxLength="100" />
+          <Property Name="GolesEquipo1" Type="int" />
+          <Property Name="Equipo2" Type="varchar" MaxLength="100" />
+          <Property Name="GolesEquipo2" Type="int" />
+          <Property Name="Ganador" Type="varchar" MaxLength="100" />
+          <Property Name="Ronda" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="Quinielas">
+          <Key>
+            <PropertyRef Name="ID_Usuario" />
+            <PropertyRef Name="ID_Partido" />
+          </Key>
+          <Property Name="ID_Usuario" Type="int" Nullable="false" />
+          <Property Name="ID_Partido" Type="int" Nullable="false" />
+          <Property Name="FechaIns" Type="datetime" />
+          <Property Name="FechaMod" Type="datetime" />
+          <Property Name="GolesEquipo1" Type="int" />
+          <Property Name="GolesEquipo2" Type="int" />
+          <Property Name="Ganador" Type="varchar" MaxLength="100" />
+          <Property Name="ID_Grupo" Type="int" />
+        </EntityType>
+        <EntityType Name="UsuarioGrupo">
+          <Key>
+            <PropertyRef Name="ID_Usuario" />
+            <PropertyRef Name="ID_Grupo" />
+          </Key>
+          <Property Name="ID_Usuario" Type="int" Nullable="false" />
+          <Property Name="ID_Grupo" Type="int" Nullable="false" />
+          <Property Name="TotalPuntos" Type="int" />
+          <Property Name="Confirmado" Type="bit" />
+        </EntityType>
+        <EntityType Name="Usuarios">
+          <Key>
+            <PropertyRef Name="ID_Usuario" />
+          </Key>
+          <Property Name="ID_Usuario" Type="int" Nullable="false" />
+          <Property Name="Nickname" Type="varchar" MaxLength="50" />
+          <Property Name="Email" Type="varchar" MaxLength="150" />
+          <Property Name="FechaIns" Type="datetime" />
+          <Property Name="ID_Facebook" Type="varchar" MaxLength="20" />
+        </EntityType>
+        <!--Errors Found During Generation:
+      warning 6002: The table/view 'QuinielaMundial.dbo.RankingView' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+        <EntityType Name="RankingView">
+          <Key>
+            <PropertyRef Name="ID_Usuario" />
+            <PropertyRef Name="ID_Grupo" />
+          </Key>
+          <Property Name="ID_Usuario" Type="int" Nullable="false" />
+          <Property Name="ID_Grupo" Type="int" Nullable="false" />
+          <Property Name="Nickname" Type="varchar" MaxLength="50" />
+          <Property Name="TotalPuntos" Type="int" />
+          <Property Name="Diferencia" Type="int" />
+        </EntityType>
+        <Association Name="FK__Grupos__ID_Usuar__0519C6AF">
+          <End Role="Usuarios" Type="QuinielaModel.Store.Usuarios" Multiplicity="0..1" />
+          <End Role="Grupos" Type="QuinielaModel.Store.Grupos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuarios">
+              <PropertyRef Name="ID_Usuario" />
+            </Principal>
+            <Dependent Role="Grupos">
+              <PropertyRef Name="ID_Usuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Quinielas__ID_Gr__182C9B23">
+          <End Role="Grupos" Type="QuinielaModel.Store.Grupos" Multiplicity="0..1" />
+          <End Role="Quinielas" Type="QuinielaModel.Store.Quinielas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Grupos">
+              <PropertyRef Name="ID_Grupo" />
+            </Principal>
+            <Dependent Role="Quinielas">
+              <PropertyRef Name="ID_Grupo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Quinielas__ID_Pa__145C0A3F">
+          <End Role="Partidos" Type="QuinielaModel.Store.Partidos" Multiplicity="1" />
+          <End Role="Quinielas" Type="QuinielaModel.Store.Quinielas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Partidos">
+              <PropertyRef Name="ID_Partido" />
+            </Principal>
+            <Dependent Role="Quinielas">
+              <PropertyRef Name="ID_Partido" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Quinielas__ID_Us__1367E606">
+          <End Role="Usuarios" Type="QuinielaModel.Store.Usuarios" Multiplicity="1" />
+          <End Role="Quinielas" Type="QuinielaModel.Store.Quinielas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuarios">
+              <PropertyRef Name="ID_Usuario" />
+            </Principal>
+            <Dependent Role="Quinielas">
+              <PropertyRef Name="ID_Usuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__UsuarioGr__ID_Gr__0AD2A005">
+          <End Role="Grupos" Type="QuinielaModel.Store.Grupos" Multiplicity="1" />
+          <End Role="UsuarioGrupo" Type="QuinielaModel.Store.UsuarioGrupo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Grupos">
+              <PropertyRef Name="ID_Grupo" />
+            </Principal>
+            <Dependent Role="UsuarioGrupo">
+              <PropertyRef Name="ID_Grupo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__UsuarioGr__ID_Us__09DE7BCC">
+          <End Role="Usuarios" Type="QuinielaModel.Store.Usuarios" Multiplicity="1" />
+          <End Role="UsuarioGrupo" Type="QuinielaModel.Store.UsuarioGrupo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuarios">
+              <PropertyRef Name="ID_Usuario" />
+            </Principal>
+            <Dependent Role="UsuarioGrupo">
+              <PropertyRef Name="ID_Usuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="QuinielaModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="QuinielaEntities" p1:LazyLoadingEnabled="true">
+          <EntitySet Name="Grupos" EntityType="QuinielaModel.Grupos" />
+          <EntitySet Name="Partidos" EntityType="QuinielaModel.Partido" />
+          <EntitySet Name="Quinielas" EntityType="QuinielaModel.Quiniela" />
+          <EntitySet Name="UsuarioGrupoes" EntityType="QuinielaModel.UsuarioGrupo" />
+          <EntitySet Name="Usuarios" EntityType="QuinielaModel.Usuario" />
+          <AssociationSet Name="FK__Grupos__ID_Usuar__0519C6AF" Association="QuinielaModel.FK__Grupos__ID_Usuar__0519C6AF">
+            <End Role="Usuarios" EntitySet="Usuarios" />
+            <End Role="Grupos" EntitySet="Grupos" />
+          </AssociationSet>
+          <AssociationSet Name="FK__UsuarioGr__ID_Gr__0AD2A005" Association="QuinielaModel.FK__UsuarioGr__ID_Gr__0AD2A005">
+            <End Role="Grupos" EntitySet="Grupos" />
+            <End Role="UsuarioGrupo" EntitySet="UsuarioGrupoes" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Quinielas__ID_Pa__145C0A3F" Association="QuinielaModel.FK__Quinielas__ID_Pa__145C0A3F">
+            <End Role="Partidos" EntitySet="Partidos" />
+            <End Role="Quinielas" EntitySet="Quinielas" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Quinielas__ID_Us__1367E606" Association="QuinielaModel.FK__Quinielas__ID_Us__1367E606">
+            <End Role="Usuarios" EntitySet="Usuarios" />
+            <End Role="Quinielas" EntitySet="Quinielas" />
+          </AssociationSet>
+          <AssociationSet Name="FK__UsuarioGr__ID_Us__09DE7BCC" Association="QuinielaModel.FK__UsuarioGr__ID_Us__09DE7BCC">
+            <End Role="Usuarios" EntitySet="Usuarios" />
+            <End Role="UsuarioGrupo" EntitySet="UsuarioGrupoes" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Quinielas__ID_Gr__182C9B23" Association="QuinielaModel.FK__Quinielas__ID_Gr__182C9B23">
+            <End Role="Grupos" EntitySet="Grupos" />
+            <End Role="Quiniela" EntitySet="Quinielas" />
+          </AssociationSet>
+          <EntitySet Name="RankingViews" EntityType="QuinielaModel.RankingView" />
+        </EntityContainer>
+        <EntityType Name="Grupos">
+          <Key>
+            <PropertyRef Name="ID_Grupo" />
+          </Key>
+          <Property Name="ID_Grupo" Type="Int32" Nullable="false" />
+          <Property Name="ID_Usuario" Type="Int32" />
+          <Property Name="Nombre" Type="String" MaxLength="70" Unicode="false" FixedLength="false" />
+          <Property Name="FechaIns" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Usuario" Relationship="QuinielaModel.FK__Grupos__ID_Usuar__0519C6AF" FromRole="Grupos" ToRole="Usuarios" />
+          <NavigationProperty Name="UsuarioGrupoes" Relationship="QuinielaModel.FK__UsuarioGr__ID_Gr__0AD2A005" FromRole="Grupos" ToRole="UsuarioGrupo" />
+          <NavigationProperty Name="Quinielas" Relationship="QuinielaModel.FK__Quinielas__ID_Gr__182C9B23" FromRole="Grupos" ToRole="Quiniela" />
+        </EntityType>
+        <EntityType Name="Partido">
+          <Key>
+            <PropertyRef Name="ID_Partido" />
+          </Key>
+          <Property Name="ID_Partido" Type="Int32" Nullable="false" />
+          <Property Name="Fecha" Type="DateTime" Precision="3" />
+          <Property Name="Equipo1" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
+          <Property Name="GolesEquipo1" Type="Int32" />
+          <Property Name="Equipo2" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
+          <Property Name="GolesEquipo2" Type="Int32" />
+          <Property Name="Ganador" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
+          <NavigationProperty Name="Quinielas" Relationship="QuinielaModel.FK__Quinielas__ID_Pa__145C0A3F" FromRole="Partidos" ToRole="Quinielas" />
+          <Property Type="String" Name="Ronda" MaxLength="100" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Quiniela">
+          <Key>
+            <PropertyRef Name="ID_Usuario" />
+            <PropertyRef Name="ID_Partido" />
+          </Key>
+          <Property Name="ID_Usuario" Type="Int32" Nullable="false" />
+          <Property Name="ID_Partido" Type="Int32" Nullable="false" />
+          <Property Name="FechaIns" Type="DateTime" Precision="3" />
+          <Property Name="FechaMod" Type="DateTime" Precision="3" />
+          <Property Name="GolesEquipo1" Type="Int32" />
+          <Property Name="GolesEquipo2" Type="Int32" />
+          <Property Name="Ganador" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
+          <NavigationProperty Name="Partido" Relationship="QuinielaModel.FK__Quinielas__ID_Pa__145C0A3F" FromRole="Quinielas" ToRole="Partidos" />
+          <NavigationProperty Name="Usuario" Relationship="QuinielaModel.FK__Quinielas__ID_Us__1367E606" FromRole="Quinielas" ToRole="Usuarios" />
+          <Property Type="Int32" Name="ID_Grupo" />
+          <NavigationProperty Name="Grupos" Relationship="QuinielaModel.FK__Quinielas__ID_Gr__182C9B23" FromRole="Quiniela" ToRole="Grupos" />
+        </EntityType>
+        <EntityType Name="UsuarioGrupo">
+          <Key>
+            <PropertyRef Name="ID_Usuario" />
+            <PropertyRef Name="ID_Grupo" />
+          </Key>
+          <Property Name="ID_Usuario" Type="Int32" Nullable="false" />
+          <Property Name="ID_Grupo" Type="Int32" Nullable="false" />
+          <Property Name="TotalPuntos" Type="Int32" />
+          <NavigationProperty Name="Grupos" Relationship="QuinielaModel.FK__UsuarioGr__ID_Gr__0AD2A005" FromRole="UsuarioGrupo" ToRole="Grupos" />
+          <NavigationProperty Name="Usuario" Relationship="QuinielaModel.FK__UsuarioGr__ID_Us__09DE7BCC" FromRole="UsuarioGrupo" ToRole="Usuarios" />
+          <Property Type="Boolean" Name="Confirmado" />
+        </EntityType>
+        <EntityType Name="Usuario">
+          <Key>
+            <PropertyRef Name="ID_Usuario" />
+          </Key>
+          <Property Name="ID_Usuario" Type="Int32" Nullable="false" />
+          <Property Name="Nickname" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="Email" Type="String" MaxLength="150" Unicode="false" FixedLength="false" />
+          <Property Name="FechaIns" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Grupos" Relationship="QuinielaModel.FK__Grupos__ID_Usuar__0519C6AF" FromRole="Usuarios" ToRole="Grupos" />
+          <NavigationProperty Name="Quinielas" Relationship="QuinielaModel.FK__Quinielas__ID_Us__1367E606" FromRole="Usuarios" ToRole="Quinielas" />
+          <NavigationProperty Name="UsuarioGrupoes" Relationship="QuinielaModel.FK__UsuarioGr__ID_Us__09DE7BCC" FromRole="Usuarios" ToRole="UsuarioGrupo" />
+          <Property Type="String" Name="ID_Facebook" MaxLength="20" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <Association Name="FK__Grupos__ID_Usuar__0519C6AF">
+          <End Role="Usuarios" Type="QuinielaModel.Usuario" Multiplicity="0..1" />
+          <End Role="Grupos" Type="QuinielaModel.Grupos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuarios">
+              <PropertyRef Name="ID_Usuario" />
+            </Principal>
+            <Dependent Role="Grupos">
+              <PropertyRef Name="ID_Usuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__UsuarioGr__ID_Gr__0AD2A005">
+          <End Role="Grupos" Type="QuinielaModel.Grupos" Multiplicity="1" />
+          <End Role="UsuarioGrupo" Type="QuinielaModel.UsuarioGrupo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Grupos">
+              <PropertyRef Name="ID_Grupo" />
+            </Principal>
+            <Dependent Role="UsuarioGrupo">
+              <PropertyRef Name="ID_Grupo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Quinielas__ID_Pa__145C0A3F">
+          <End Role="Partidos" Type="QuinielaModel.Partido" Multiplicity="1" />
+          <End Role="Quinielas" Type="QuinielaModel.Quiniela" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Partidos">
+              <PropertyRef Name="ID_Partido" />
+            </Principal>
+            <Dependent Role="Quinielas">
+              <PropertyRef Name="ID_Partido" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Quinielas__ID_Us__1367E606">
+          <End Role="Usuarios" Type="QuinielaModel.Usuario" Multiplicity="1" />
+          <End Role="Quinielas" Type="QuinielaModel.Quiniela" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuarios">
+              <PropertyRef Name="ID_Usuario" />
+            </Principal>
+            <Dependent Role="Quinielas">
+              <PropertyRef Name="ID_Usuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__UsuarioGr__ID_Us__09DE7BCC">
+          <End Role="Usuarios" Type="QuinielaModel.Usuario" Multiplicity="1" />
+          <End Role="UsuarioGrupo" Type="QuinielaModel.UsuarioGrupo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuarios">
+              <PropertyRef Name="ID_Usuario" />
+            </Principal>
+            <Dependent Role="UsuarioGrupo">
+              <PropertyRef Name="ID_Usuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Quinielas__ID_Gr__182C9B23">
+          <End Type="QuinielaModel.Grupos" Role="Grupos" Multiplicity="0..1" />
+          <End Type="QuinielaModel.Quiniela" Role="Quiniela" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Grupos">
+              <PropertyRef Name="ID_Grupo" />
+            </Principal>
+            <Dependent Role="Quiniela">
+              <PropertyRef Name="ID_Grupo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="RankingView">
+          <Key>
+            <PropertyRef Name="ID_Usuario" />
+            <PropertyRef Name="ID_Grupo" />
+          </Key>
+          <Property Type="Int32" Name="ID_Usuario" Nullable="false" />
+          <Property Type="String" Name="Nickname" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="Int32" Name="TotalPuntos" />
+          <Property Type="Int32" Name="Diferencia" />
+          <Property Type="Int32" Name="ID_Grupo" Nullable="false" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="QuinielaModelStoreContainer" CdmEntityContainer="QuinielaEntities">
+          <EntitySetMapping Name="Grupos">
+            <EntityTypeMapping TypeName="QuinielaModel.Grupos">
+              <MappingFragment StoreEntitySet="Grupos">
+                <ScalarProperty Name="ID_Grupo" ColumnName="ID_Grupo" />
+                <ScalarProperty Name="ID_Usuario" ColumnName="ID_Usuario" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="FechaIns" ColumnName="FechaIns" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Partidos">
+            <EntityTypeMapping TypeName="QuinielaModel.Partido">
+              <MappingFragment StoreEntitySet="Partidos">
+                <ScalarProperty Name="Ronda" ColumnName="Ronda" />
+                <ScalarProperty Name="ID_Partido" ColumnName="ID_Partido" />
+                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+                <ScalarProperty Name="Equipo1" ColumnName="Equipo1" />
+                <ScalarProperty Name="GolesEquipo1" ColumnName="GolesEquipo1" />
+                <ScalarProperty Name="Equipo2" ColumnName="Equipo2" />
+                <ScalarProperty Name="GolesEquipo2" ColumnName="GolesEquipo2" />
+                <ScalarProperty Name="Ganador" ColumnName="Ganador" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Quinielas">
+            <EntityTypeMapping TypeName="QuinielaModel.Quiniela">
+              <MappingFragment StoreEntitySet="Quinielas">
+                <ScalarProperty Name="ID_Grupo" ColumnName="ID_Grupo" />
+                <ScalarProperty Name="ID_Usuario" ColumnName="ID_Usuario" />
+                <ScalarProperty Name="ID_Partido" ColumnName="ID_Partido" />
+                <ScalarProperty Name="FechaIns" ColumnName="FechaIns" />
+                <ScalarProperty Name="FechaMod" ColumnName="FechaMod" />
+                <ScalarProperty Name="GolesEquipo1" ColumnName="GolesEquipo1" />
+                <ScalarProperty Name="GolesEquipo2" ColumnName="GolesEquipo2" />
+                <ScalarProperty Name="Ganador" ColumnName="Ganador" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UsuarioGrupoes">
+            <EntityTypeMapping TypeName="QuinielaModel.UsuarioGrupo">
+              <MappingFragment StoreEntitySet="UsuarioGrupo">
+                <ScalarProperty Name="Confirmado" ColumnName="Confirmado" />
+                <ScalarProperty Name="ID_Usuario" ColumnName="ID_Usuario" />
+                <ScalarProperty Name="ID_Grupo" ColumnName="ID_Grupo" />
+                <ScalarProperty Name="TotalPuntos" ColumnName="TotalPuntos" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Usuarios">
+            <EntityTypeMapping TypeName="QuinielaModel.Usuario">
+              <MappingFragment StoreEntitySet="Usuarios">
+                <ScalarProperty Name="ID_Facebook" ColumnName="ID_Facebook" />
+                <ScalarProperty Name="ID_Usuario" ColumnName="ID_Usuario" />
+                <ScalarProperty Name="Nickname" ColumnName="Nickname" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="FechaIns" ColumnName="FechaIns" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RankingViews">
+            <EntityTypeMapping TypeName="QuinielaModel.RankingView">
+              <MappingFragment StoreEntitySet="RankingView">
+                <ScalarProperty Name="ID_Grupo" ColumnName="ID_Grupo" />
+                <ScalarProperty Name="Diferencia" ColumnName="Diferencia" />
+                <ScalarProperty Name="TotalPuntos" ColumnName="TotalPuntos" />
+                <ScalarProperty Name="Nickname" ColumnName="Nickname" />
+                <ScalarProperty Name="ID_Usuario" ColumnName="ID_Usuario" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

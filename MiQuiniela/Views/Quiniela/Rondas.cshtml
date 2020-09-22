@@ -1,0 +1,196 @@
+﻿@model List<MiQuiniela.Models.Quiniela>
+
+@section scripts{
+    <script type="application/javascript" src="~/Scripts/add2home.js"></script>
+    <script type="text/javascript">
+        function updateClock() {
+            var currentTime = new Date();
+            var currentHours = currentTime.getHours();
+            var currentMinutes = currentTime.getMinutes();
+            var currentSeconds = currentTime.getSeconds();
+
+            // Pad the minutes and seconds with leading zeros, if required
+            currentMinutes = (currentMinutes < 10 ? "0" : "") + currentMinutes;
+            currentSeconds = (currentSeconds < 10 ? "0" : "") + currentSeconds;
+
+            // Choose either "AM" or "PM" as appropriate
+            var timeOfDay = (currentHours < 12) ? "AM" : "PM";
+
+            // Convert the hours component to 12-hour format if needed
+            currentHours = (currentHours > 12) ? currentHours - 12 : currentHours;
+
+            // Convert an hours component of "0" to "12"
+            currentHours = (currentHours == 0) ? 12 : currentHours;
+
+            // Compose the string for display
+            var currentTimeString = currentHours + ":" + currentMinutes + ":" + currentSeconds + " " + timeOfDay;
+
+
+            $("#clock").html(currentTimeString);
+        }
+
+        $(document).ready(function () {
+            $('#menu').slicknav({
+                prependTo: '#menu1',
+                label: ''
+            });
+            setInterval('updateClock()', 1000);
+        });
+        </script>
+}
+
+@section Header {
+    @*@Html.ActionLink("Atrás", "Index", "Home", null, new { data_icon = "arrow-l" })*@
+    <div id="menu1" class="ui-btn-left"></div>
+    <h1>@ViewBag.Title</h1>
+    @Html.ActionLink("Ranking", "Ranking", "Quiniela", new { ID_Grupo = Model[0].ID_Grupo, ID_Usuario = Model[0].ID_Usuario }, new { data_icon = "star", Class = "ui-btn-right"  })
+}
+
+@{
+    ViewBag.Title = "Mi Quiniela";
+}
+<h3>@ViewBag.Message</h3>
+<h4>Elige la ronda</h4>
+<ul data-role="listview" data-inset="true">
+    <li data-role="list-divider">Rondas</li>
+    @foreach (MiQuiniela.Models.Quiniela q in Model)
+    { 
+        <li>@Html.ActionLink(q.Partido.Ronda, "Index", "Quiniela", new { ID_Grupo = q.ID_Grupo, ID_Usuario = q.ID_Usuario, Ronda = q.Partido.Ronda }, null)
+            @if(q.Partido.Ronda == "Primera Ronda")
+            {
+                if (DateTime.Now >= Convert.ToDateTime("2014-06-12 1:00 PM"))
+                { 
+                    <span style="color:red; font-size:11px; text-align:right; margin-left:30px;">Ronda cerrada. Sólo consulta.</span>
+                }
+                else
+                {
+                    <span style="color:red; font-size:11px; text-align:right; margin-left:30px;">Cierre: 12/Jun/2014  1:00 PM</span>
+                }
+            }
+            @if (q.Partido.Ronda == "Segunda Ronda")
+            {
+                if (DateTime.Now >= Convert.ToDateTime("2014-06-17 1:00 PM"))
+                { 
+                    <span style="color:red; font-size:11px; text-align:right; margin-left:30px;">Ronda cerrada. Sólo consulta.</span>
+                }
+                else if(Convert.ToDateTime("2014-06-17 1:00 PM").Subtract(DateTime.Now).Days <= 1)
+                {
+                    <span style="color:red; font-size:11px; text-align:right; margin-left:30px;">Cierre: 17/Jun/2014  1:00 PM</span>
+                }
+                else
+                {
+                    <span style="color:green; font-size:11px; text-align:right; margin-left:30px;">Cierre: 17/Jun/2014  1:00 PM</span>
+                }
+            }
+            @if (q.Partido.Ronda == "Tercera Ronda")
+            {
+                if (DateTime.Now >= Convert.ToDateTime("2014-06-23 09:10 AM"))
+                { 
+                    <span style="color:red; font-size:11px; text-align:right; margin-left:30px;">Ronda cerrada. Sólo consulta.</span>
+                }
+                else if(Convert.ToDateTime("2014-06-23 09:00 AM").Subtract(DateTime.Now).Days <= 1)
+                {
+                    <span style="color:red; font-size:11px; text-align:right; margin-left:30px;">Cierre: 23/Jun/2014  11:00 AM</span>
+                }
+                else
+                {
+                    <span style="color:green; font-size:11px; text-align:right; margin-left:30px;">Cierre: 23/Jun/2014  11:00 AM</span>
+                }
+            }
+            @if (q.Partido.Ronda == "Octavos de final")
+            {
+                if (DateTime.Now >= Convert.ToDateTime("2014-06-28 09:10 AM"))
+                { 
+                    <span style="color:red; font-size:11px; text-align:right; margin-left:30px;">Ronda cerrada. Sólo consulta.</span>
+                }
+                else if (Convert.ToDateTime("2014-06-28 09:00 AM").Subtract(DateTime.Now).TotalHours <= 24)
+                {
+                    <span style="color:red; font-size:11px; text-align:right; margin-left:30px;">Cierre: 28/Jun/2014  11:00 AM</span>
+                }
+                else
+                {
+                    <span style="color:green; font-size:11px; text-align:right; margin-left:30px;">Cierre: 28/Jun/2014  11:00 AM</span>
+                }
+            }
+            @if (q.Partido.Ronda == "Cuartos de final")
+            {
+                if (DateTime.Now >= Convert.ToDateTime("2014-07-04 09:10 AM"))
+                { 
+                    <span style="color:red; font-size:11px; text-align:right; margin-left:30px;">Ronda cerrada. Sólo consulta.</span>
+                }
+                else if (Convert.ToDateTime("2014-07-04 09:00 AM").Subtract(DateTime.Now).TotalHours <= 24)
+                {
+                    <span style="color:red; font-size:11px; text-align:right; margin-left:30px;">Cierre: 04/Jul/2014  11:00 AM</span>
+                }
+                else
+                {
+                    <span style="color:green; font-size:11px; text-align:right; margin-left:30px;">Cierre: 04/Jul/2014  11:00 AM</span>
+                }
+            }
+            @if (q.Partido.Ronda == "Semifinales")
+            {
+                if (DateTime.Now >= Convert.ToDateTime("2014-07-08 01:10 PM"))
+                { 
+                    <span style="color:red; font-size:11px; text-align:right; margin-left:30px;">Ronda cerrada. Sólo consulta.</span>
+                }
+                else if (Convert.ToDateTime("2014-07-08 01:00 PM").Subtract(DateTime.Now).TotalHours <= 24)
+                {
+                    <span style="color:red; font-size:11px; text-align:right; margin-left:30px;">Cierre: 08/Jul/2014  3:00 PM</span>
+                }
+                else
+                {
+                    <span style="color:green; font-size:11px; text-align:right; margin-left:30px;">Cierre: 08/Jul/2014  3:00 PM</span>
+                }
+            }
+            @if (q.Partido.Ronda == "Tercer Lugar")
+            {
+                if (DateTime.Now >= Convert.ToDateTime("2014-07-12 01:10 PM"))
+                { 
+                    <span style="color:red; font-size:11px; text-align:right; margin-left:30px;">Ronda cerrada. Sólo consulta.</span>
+                }
+                else if (Convert.ToDateTime("2014-07-12 01:00 PM").Subtract(DateTime.Now).TotalHours <= 24)
+                {
+                    <span style="color:red; font-size:11px; text-align:right; margin-left:30px;">Cierre: 12/Jul/2014  3:00 PM</span>
+                }
+                else
+                {
+                    <span style="color:green; font-size:11px; text-align:right; margin-left:30px;">Cierre: 12/Jul/2014  3:00 PM</span>
+                }
+            }
+            @if (q.Partido.Ronda == "Final")
+            {
+                if (DateTime.Now >= Convert.ToDateTime("2014-07-13 12:10 PM"))
+                { 
+                    <span style="color:red; font-size:11px; text-align:right; margin-left:30px;">Ronda cerrada. Sólo consulta.</span>
+                }
+                else if (Convert.ToDateTime("2014-07-13 12:00 PM").Subtract(DateTime.Now).TotalHours <= 24)
+                {
+                    <span style="color:red; font-size:11px; text-align:right; margin-left:30px;">Cierre: 13/Jul/2014  2:00 PM</span>
+                }
+                else
+                {
+                    <span style="color:green; font-size:11px; text-align:right; margin-left:30px;">Cierre: 13/Jul/2014  2:00 PM</span>
+                }
+            }
+        </li>
+    }
+    @if (Model.Count() == 0)
+    { 
+        <li>No tienes grupos asignados</li>
+    }
+</ul>
+    
+<ul id="menu" style="display:none;">
+           @if (DateTime.Now >= Convert.ToDateTime("2014-07-13 12:10 PM"))
+           {
+	            <li><a style="color:white;" href="Usuarios?ID_Grupo=@Model[0].ID_Grupo">Otras Quinielas</a></li>
+           }
+	            @*<li><a style="color:white;" href="#usage">Cambiar Alias</a></li>*@
+	            <li><a style="color:white;" href="Reglas?ID_Grupo=@Model[0].ID_Grupo&ID_Usuario=@Model[0].ID_Usuario">Reglas</a></li>
+            @if (Model[0].ID_Usuario == 1)
+            { 
+                <li><a style="color:white;" href="Partidos?ID_Grupo=@Model[0].ID_Grupo&ID_Usuario=@Model[0].ID_Usuario">Partidos</a></li>
+            }
+</ul>
+
+

@@ -1,0 +1,46 @@
+﻿@model MiQuiniela.Models.Grupos
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<fieldset>
+    <legend>Grupos</legend>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.ID_Grupo)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.ID_Grupo)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Usuario.Nickname)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Usuario.Nickname)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Nombre)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Nombre)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.FechaIns)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.FechaIns)
+    </div>
+</fieldset>
+@using (Html.BeginForm()) {
+    <p>
+        <input type="submit" value="Delete" /> |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+}

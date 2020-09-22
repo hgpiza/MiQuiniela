@@ -1,0 +1,114 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>@ViewBag.Title</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+        <meta name="format-detection" content="telephone=no" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+        <meta name="viewport" content="width=device-width" />
+        <link href="~/Content/images/icon-16x16.png" rel="shortcut icon" type="image/x-icon" />
+        @Styles.Render("~/Content/mobileCss", "~/Content/css")
+        @Scripts.Render("~/bundles/modernizr")
+        <link rel="stylesheet" href="~/Content/add2home.css"/>
+        
+        <link rel="apple-touch-icon" href="~/Content/images/icon-60x60.png" />
+        <link rel="apple-touch-icon" sizes="76x76" href="~/Content/images/icon-76x76.png" />
+        <link rel="apple-touch-icon" sizes="120x120" href="~/Content/images/icon-120x120.png" />
+        <link rel="apple-touch-icon" sizes="152x152" href="~/Content/images/icon-152x152.png" />
+
+        <!-- Startup images -->
+ 
+        <!-- iOS 6 & 7 iPad (retina, portrait) -->
+        <link href="~/Content/images/icon-1536x2048.png"
+              media="(device-width: 768px) and (device-height: 1024px)
+                 and (orientation: portrait)
+                 and (-webkit-device-pixel-ratio: 2)"
+              rel="apple-touch-startup-image" />
+ 
+        <!-- iOS 6 & 7 iPad (retina, landscape) -->
+        <link href="~/Content/images/icon-2048x1536.png"
+              media="(device-width: 768px) and (device-height: 1024px)
+                 and (orientation: landscape)
+                 and (-webkit-device-pixel-ratio: 2)"
+              rel="apple-touch-startup-image"/>
+ 
+        <!-- iOS 6 iPad (portrait) -->
+        <link href="~/Content/images/icon-768x1024.png"
+              media="(device-width: 768px) and (device-height: 1024px)
+                 and (orientation: portrait)
+                 and (-webkit-device-pixel-ratio: 1)"
+              rel="apple-touch-startup-image"/>
+ 
+        <!-- iOS 6 iPad (landscape) -->
+        <link href="~/Content/images/icon-1024x768.png"
+              media="(device-width: 768px) and (device-height: 1024px)
+                 and (orientation: landscape)
+                 and (-webkit-device-pixel-ratio: 1)"
+              rel="apple-touch-startup-image"/>
+ 
+        <!-- iOS 6 & 7 iPhone 5 -->
+        <link href="~/Content/images/icon-640x1096.png"
+              media="(device-width: 320px) and (device-height: 568px)
+                 and (-webkit-device-pixel-ratio: 2)"
+              rel="apple-touch-startup-image"/>
+ 
+        <!-- iOS 6 & 7 iPhone (retina) -->
+        <link href="~/Content/images/icon-640x920.png"
+              media="(device-width: 320px) and (device-height: 480px)
+                 and (-webkit-device-pixel-ratio: 2)"
+              rel="apple-touch-startup-image"/>
+ 
+        <!-- iOS 6 iPhone -->
+        <link href="~/Content/images/icon-320x480.png"
+              media="(device-width: 320px) and (device-height: 480px)
+                 and (-webkit-device-pixel-ratio: 1)"
+              rel="apple-touch-startup-image"/>
+        <link rel="stylesheet" href="~/Content/slicknav.css">
+        @*<link type="text/css" rel="stylesheet" href="~/Content/jquery.mmenu.all.css" />*@
+        @*<script src="/Scripts/jquery-1.7.1.js"></script>*@
+        
+        @*<script type="text/javascript" src="~/Scripts/jquery.mmenu.min.all.js"></script>*@
+        
+
+    </head>
+    <body>
+
+        <div data-role="page" data-theme="c" @TempData["DataUrl"]>
+                    
+            <div data-role="header">
+                @if (IsSectionDefined("Header")) {
+                    @RenderSection("Header")
+                } 
+                else {
+                    <h1>@ViewBag.Title</h1>@*
+                    @Html.Partial("_LoginPartial")*@
+                }
+            </div>
+            <span id="clock" style="position:fixed; bottom:50px; right:5px; color:gray; " ></span>
+            @*<span id="clockServer" style="position:fixed; bottom:50px; left:5px; color:gray; " >@DateTime.Now.ToShortTimeString()</span>*@
+            <div data-role="content">
+                @RenderBody()
+            </div>
+            
+            <div data-role="footer" data-position="fixed">
+                @if (IsSectionDefined("Footer")) {
+                    @RenderSection("Footer")
+                } 
+                else {
+                    <h4>Developed by Jirafo Inc</h4>@*
+                    @Html.Partial("_LoginPartial")*@
+                }
+            </div>
+        </div>
+
+        @Scripts.Render("~/bundles/jquery", "~/bundles/jquerymobile")
+        @RenderSection("scripts", required: false)
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+        <script src="~/Scripts/jquery.slicknav.js"></script>
+        
+        
+    </body>
+</html>

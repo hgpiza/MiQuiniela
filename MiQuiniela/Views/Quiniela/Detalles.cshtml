@@ -1,0 +1,40 @@
+﻿@model List<MiQuiniela.Models.Quiniela>
+
+@section Header {
+    @Html.ActionLink("Atrás", "Rondas", "Quiniela", new { ID_Grupo = Model[0].ID_Grupo, ID_Usuario = Model[0].ID_Usuario, token = Session["AccessToken"].ToString() }, new { data_icon = "arrow-l" })
+    <h1>@ViewBag.Title</h1>
+}
+
+<h2>@ViewBag.Message</h2>
+@using (Html.BeginForm()) {
+
+    
+    for(int i=0; i<Model.Count; i++)
+    { 
+        @Html.HiddenFor(m => m[i].ID_Partido)
+        @Html.HiddenFor(m => m[i].ID_Usuario)
+    <div class="ui-grid-c">
+        <div class="ui-block-a" style="width:32%;">
+            <div class="ui-bar ui-bar-a" style="height:50px">
+                @Html.DisplayFor(m => m[i].Partido.Equipo1)
+            </div>
+        </div>
+        <div class="ui-block-b" style="width:18%;">
+            <div class="ui-bar ui-bar-a" style="height:50px">
+                @Html.DisplayFor(m => m[i].GolesEquipo1)
+            </div>
+        </div>
+        <div class="ui-block-c" style="width:18%;">
+            <div class="ui-bar ui-bar-a" style="height:50px">
+                @Html.DisplayFor(m => m[i].GolesEquipo2)
+            </div>
+        </div>
+        <div class="ui-block-d" style="width:32%;">
+            <div class="ui-bar ui-bar-a" style="height:50px">
+                @Html.DisplayFor(m => m[i].Partido.Equipo2)
+            </div>
+        </div>
+    </div>
+    }
+}
+

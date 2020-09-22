@@ -1,0 +1,15 @@
+﻿@model List<MiQuiniela.Controllers.FbUser>
+
+@{
+    ViewBag.Title = "Users";
+}
+
+<h2>Users</h2>
+
+<ul data-role="listview" data-inset="true">
+    <li data-role="list-divider">Amigos</li>
+    @foreach (var user in Model)
+    { 
+        <li>user.Name</li>
+    }
+</ul>

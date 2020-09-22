@@ -1,0 +1,23 @@
+﻿@model List<MiQuiniela.Models.Quiniela>
+
+@section Header {
+    @Html.ActionLink("Atrás", "Rondas", "Quiniela", new { ID_Grupo = Model[0].ID_Grupo, ID_Usuario = Model[0].ID_Usuario, token = Session["AccessToken"].ToString() }, new { data_icon = "arrow-l" })
+    <h1>@ViewBag.Title</h1>
+}
+
+@{
+    ViewBag.Title = "Reglas";
+}
+
+<h2>Reglas</h2>
+
+<ul data-role="listview" data-inset="true">
+    <li data-role="list-divider">Puntaje</li>
+    <li>3 puntos por atinarle al marcador exacto.</li>
+    <li>1 punto por atinarle sólo al que gane o empate en su caso.</li>
+</ul>
+<ul data-role="listview" data-inset="true">
+    <li data-role="list-divider">General</li>
+    <li>Se considera desde el primer partido, hasta la gran final.</li>
+    <li>La persona que acumule la mayor cantidad de puntos ganará.</li>
+</ul>

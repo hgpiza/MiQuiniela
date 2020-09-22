@@ -1,0 +1,47 @@
+﻿@model List<MiQuiniela.Models.Partido>
+
+@section Header {
+    @Html.ActionLink("Atrás", "Rondas", "Quiniela", new { ID_Grupo = Int32.Parse(TempData["ID_Grupo"].ToString()), ID_Usuario = Int32.Parse(TempData["ID_Usuario"].ToString()), token = Session["AccessToken"].ToString() }, new { data_icon = "arrow-l" })
+    <h1>@ViewBag.Title</h1>
+}
+<span id="success" style="position:fixed; top:70px; right:10px; color:blue; font-weight:bold; " >
+    @ViewBag.SaveMessage
+</span>
+<span id="fail" style="position:fixed; top:70px; right:10px; color:red; font-weight:bold;" >
+    @ViewBag.FailMessage
+</span>
+<h2>Resultados Oficiales</h2>
+@using (Html.BeginForm()) {
+
+    
+    for(int i=0; i<Model.Count; i++)
+    { 
+        @Html.HiddenFor(m => m[i].ID_Partido)
+        @Html.HiddenFor(m => m[i].Ronda)
+    <div class="ui-grid-c">
+        <div class="ui-block-a" style="width:32%;">
+            <div class="ui-bar ui-bar-a" style="height:50px">
+                @Html.DisplayFor(m => m[i].Equipo1)
+            </div>
+        </div>
+        <div class="ui-block-b" style="width:18%;">
+            <div class="ui-bar ui-bar-a" style="height:50px">
+                @Html.EditorFor(m => m[i].GolesEquipo1)
+            </div>
+        </div>
+        <div class="ui-block-c" style="width:18%;">
+            <div class="ui-bar ui-bar-a" style="height:50px">
+                @Html.EditorFor(m => m[i].GolesEquipo2)
+            </div>
+        </div>
+        <div class="ui-block-d" style="width:32%;">
+            <div class="ui-bar ui-bar-a" style="height:50px">
+                @Html.DisplayFor(m => m[i].Equipo2)
+            </div>
+        </div>
+    </div>
+    }
+        <p>
+            <input type="submit" value="Guardar" />
+        </p>
+}
